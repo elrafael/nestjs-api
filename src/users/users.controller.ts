@@ -1,14 +1,26 @@
-import { Controller, Get, UseGuards, Request } from '@nestjs/common'
+import { Controller, Get, UseGuards, Request, Post, Body, Param } from '@nestjs/common'
 import { AuthGuard } from '../auth/guards/auth.guard'
+import { UsersService } from './users.service'
 
 @Controller('users')
 export class UsersController {
-  constructor() {}
+  constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(AuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
-    console.log('🚀 ~ UsersController ~ getProfile ~ req.user:', req.user)
+  async getProfile(@Request() req) {
     return req.user
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('create')
+  async createUser(@Request() req, @Body() newUser: any) {
+    return this.usersService.createUser(newUser)
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('id/:id')
+  async getById(@Param('id') id: number) {
+    return this.usersService.getById(id)
   }
 }
