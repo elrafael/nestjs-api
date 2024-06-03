@@ -3,6 +3,7 @@ import { AuthGuard } from '../auth/guards/auth.guard'
 import { UsersService } from './users.service'
 import { Roles } from 'src/decorators/roles.decorator'
 import { Role } from 'src/enums/role.enum'
+import { CreateUserDto } from './dto/create-user.dto'
 
 @Controller('users')
 export class UsersController {
@@ -17,8 +18,8 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Post('create')
   @Roles(Role.Admin)
-  async createUser(@Request() req, @Body() newUser: any) {
-    return this.usersService.createUser(newUser)
+  async createUser(@Request() req, @Body() userDto: CreateUserDto) {
+    return this.usersService.createUser(userDto)
   }
 
   @UseGuards(AuthGuard)

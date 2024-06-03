@@ -4,6 +4,7 @@ import { hash, compare } from 'bcrypt'
 import { ObjectId } from 'mongodb'
 import { Repository } from 'typeorm'
 import { User } from './user.entity'
+import { CreateUserDto } from './dto/create-user.dto'
 
 @Injectable()
 export class UsersService {
@@ -16,11 +17,12 @@ export class UsersService {
     return this.repository.find()
   }
 
-  async createUser(newUser: User) {
+  async createUser(userDto: CreateUserDto) {
     const user = new User()
-    user.login = newUser.login
-    user.name = newUser.name
-    user.password = await hash(newUser.password, +process.env.SALT_HASH)
+    user.login = userDto.login
+    user.name = userDto.name
+    user.password = await hash(userDto.password, +process.env.SALT_HASH)
+    user.role = userDto.role
     return this.repository.save(user)
   }
 
