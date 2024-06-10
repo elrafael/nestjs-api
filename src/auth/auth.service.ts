@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { UsersService } from 'src/users/users.service'
@@ -11,8 +10,8 @@ export class AuthService {
   ) {}
 
   async login(user: any): Promise<any> {
-    const payload = { username: user.username, sub: user.userId, role: user.role }
-    console.log('🚀 ~ AuthService ~ login ~ user:', user)
+    const roles = user?.role.map((r) => r.name)
+    const payload = { username: user.login, sub: user.id, roles }
     return {
       access_token: this.jwtService.sign(payload),
     }
