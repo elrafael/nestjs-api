@@ -9,21 +9,24 @@ import { AuthModule } from './auth/auth.module'
 import { AuthGuard } from './auth/guards/auth.guard'
 import { RolesGuard } from './auth/guards/roles.guard'
 import { UsersModule } from './users/users.module'
+import { RolesModule } from './roles/roles.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: process.env.MONGODB_URL,
-      database: process.env.MONGODB_DATABASE,
+      type: 'mysql',
+      host: process.env.MYSQL_HOST,
+      port: 3306,
+      username: process.env.MYSQL_USERNAME,
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      ssl: true,
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
+      synchronize: true,
     }),
     AuthModule,
     UsersModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [
