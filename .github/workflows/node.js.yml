@@ -25,5 +25,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         #cache: 'npm'
         #cache-dependency-path: '/nestjs-api/package-lock.json'
-    - run: npm install
-    - run: npm run build
+    - name: Install Dependencies
+      run: npm ci
+    - name: Build Project
+      run: npm run build
+    - name: Stop current PM2 process by name
+      run: pm2 stop nestjs-api || true
+    - name: Start new PM2 process with name
+      run: pm2 start .\dist\main.js --name nestjs-api
+    - name: Save PM2 process list
+      run: pm2 save
