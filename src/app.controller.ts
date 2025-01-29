@@ -13,7 +13,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return this.appService.getHello() // will be removed
+    return this.appService.getHello()
   }
 
   @UseGuards(LocalAuthGuard)
