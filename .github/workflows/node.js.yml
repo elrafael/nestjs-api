@@ -28,14 +28,14 @@ jobs:
         working-directory: D:\nestjs-api
         run: npm install
       - name: Build Project
+        working-directory: D:\nestjs-api
         run: npm run build
+      - name: Stop current PM2 process by name
         working-directory: D:\nestjs-api
-      - name: Run Nestjs
+        run: pm2 stop nestjs-api || true
+      - name: Start new PM2 process with name
         working-directory: D:\nestjs-api
-        run: node dist/main.js
-    #- name: Stop current PM2 process by name
-    #  run: pm2 stop nestjs-api || true
-    #- name: Start new PM2 process with name
-    #  run: pm2 start .\dist\main.js --name nestjs-api
-    #- name: Save PM2 process list
-    #  run: pm2 save
+        run: pm2 start .\dist\main.js --name nestjs-api
+      - name: Save PM2 process list
+        working-directory: D:\nestjs-api
+        run: pm2 save
