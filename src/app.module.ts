@@ -1,14 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { APP_GUARD } from '@nestjs/core'
-import { JwtService } from '@nestjs/jwt'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AuthModule } from './auth/auth.module'
-import { AuthGuard } from './auth/guards/auth.guard'
-import { RolesGuard } from './auth/guards/roles.guard'
-import { RolesModule } from './roles/roles.module'
-import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
@@ -23,22 +16,22 @@ import { UsersModule } from './users/users.module'
     //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
     //   synchronize: true,
     // }),
-    AuthModule,
-    UsersModule,
-    RolesModule,
+    // AuthModule,
+    // UsersModule,
+    // RolesModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    JwtService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
+    // JwtService,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
   ],
 })
 export class AppModule {}
