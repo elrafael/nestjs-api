@@ -25,13 +25,13 @@ jobs:
           #cache: 'npm'
           #cache-dependency-path: '/nestjs-api/package-lock.json'
       - name: Install Dependencies
-        working-directory: ./nestjs-api
+        working-directory: D:\nestjs-api
         run: npm install
       - name: Build Project
         run: npm run build
-        working-directory: ./nestjs-api
+        working-directory: D:\nestjs-api
       - name: Run Nestjs
-        working-directory: ./nestjs-api
+        working-directory: D:\nestjs-api
         run: node dist/main.js
     #- name: Stop current PM2 process by name
     #  run: pm2 stop nestjs-api || true
