@@ -5,11 +5,10 @@ name: Node.js CI
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   build:
-
     runs-on: self-hosted
 
     strategy:
@@ -18,20 +17,25 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        #cache: 'npm'
-        #cache-dependency-path: '/nestjs-api/package-lock.json'
-    - name: Install Dependencies
-      run: npm install
-    - name: Build Project
-      run: npm run build
-    - name: Stop current PM2 process by name
-      run: pm2 stop nestjs-api || true
-    - name: Start new PM2 process with name
-      run: pm2 start .\dist\main.js --name nestjs-api
-    - name: Save PM2 process list
-      run: pm2 save
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          #cache: 'npm'
+          #cache-dependency-path: '/nestjs-api/package-lock.json'
+      - name: Install Dependencies
+        working-directory: ./nestjs-api
+        run: npm install
+      - name: Build Project
+        run: npm run build
+        working-directory: ./nestjs-api
+      - name: Run Nestjs
+        working-directory: ./nestjs-api
+        run: node dist/main.js
+    #- name: Stop current PM2 process by name
+    #  run: pm2 stop nestjs-api || true
+    #- name: Start new PM2 process with name
+    #  run: pm2 start .\dist\main.js --name nestjs-api
+    #- name: Save PM2 process list
+    #  run: pm2 save
