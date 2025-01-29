@@ -29,6 +29,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
+    needs: build
     steps:
       - name: Stop current PM2 process by name
         working-directory: D:\nestjs-api
